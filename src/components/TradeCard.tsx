@@ -221,19 +221,16 @@ export default function TradeCard({ trade, index }: TradeCardProps): React.JSX.E
           {/* Photo area - left/right split with exchange sequence */}
           <div className="trade-split relative w-full flex aspect-[5/3] sm:aspect-[16/9] lg:aspect-[2/1]">
 
-            {/* Left panel: given item */}
+            {/* Left panel: given item — sepia/faded, "letting go" feel */}
             <div className="trade-given relative w-[47%] overflow-hidden">
               <TradePhoto src={trade.givenImage} alt={trade.givenItem} itemName={trade.givenItem} cutout={trade.givenCutout} className="w-full h-full" />
-              <div className="absolute inset-0 bg-gradient-to-r from-warm-900/30 via-transparent to-warm-900/50" />
-              <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-warm-900/70 to-transparent pointer-events-none" />
-              {/* label: top-right corner */}
-              <div className="absolute top-2 right-2 sm:top-3 sm:right-3 z-10 pointer-events-none">
-                <span className="inline-block px-2 py-0.5 bg-warm-900/70 backdrop-blur-sm text-white/80 text-[8px] sm:text-[9px] font-mono tracking-[0.15em] uppercase">gave</span>
-              </div>
-              {/* item name: bottom */}
+              {/* Sepia wash: makes the given item feel like a memory being handed off */}
+              <div className="absolute inset-0 bg-warm-800/20 mix-blend-multiply pointer-events-none" />
+              <div className="absolute inset-x-0 bottom-0 h-3/4 bg-gradient-to-t from-warm-900/85 via-warm-900/25 to-transparent pointer-events-none" />
+              {/* Label: no box, just a tracking underline — handwritten feel */}
               <div className="absolute bottom-3 left-3 sm:bottom-4 sm:left-4 z-10 pointer-events-none">
-                <p className="text-white text-sm sm:text-base font-bold drop-shadow-lg leading-tight line-clamp-2 break-keep max-w-[90%]"
-                  style={{ textShadow: "0 1px 8px rgba(0,0,0,0.7)" }}>{trade.givenItem}</p>
+                <span className="text-white/45 text-[7px] sm:text-[9px] font-mono tracking-[0.3em] uppercase border-b border-white/20 pb-px">내놓은 것</span>
+                <p className="mt-1.5 text-white/75 text-xs sm:text-sm font-medium drop-shadow-lg leading-snug line-clamp-2 break-keep max-w-[90%]">{trade.givenItem}</p>
               </div>
             </div>
 
@@ -242,32 +239,36 @@ export default function TradeCard({ trade, index }: TradeCardProps): React.JSX.E
               <ExchangeArrow />
             </div>
 
-            {/* Divider line */}
-            <div className="absolute left-[47%] top-0 bottom-0 w-[6%] z-20 flex items-center justify-center pointer-events-none">
-              <div className="w-px h-full bg-white/20" />
+            {/* Divider: double-line with diagonal offset — more craft feel */}
+            <div className="absolute left-[47%] top-0 bottom-0 w-[6%] z-20 pointer-events-none overflow-hidden flex items-center justify-center">
+              <div className="w-px h-full bg-white/15" />
+              <div className="w-px h-[60%] bg-white/08 ml-0.5" />
             </div>
 
-            {/* Right panel: received item */}
+            {/* Right panel: received item — vivid, "acquiring" feel */}
             <div className="trade-received relative w-[53%] ml-auto overflow-hidden">
               <TradePhoto src={trade.receivedImage} alt={trade.receivedItem} itemName={trade.receivedItem} cutout={trade.receivedCutout} className="w-full h-full" />
-              <div className="absolute inset-0 bg-gradient-to-l from-warm-900/30 via-transparent to-warm-900/50" />
               <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-warm-900/70 to-transparent pointer-events-none" />
-              {/* label: top-left corner, accent color */}
-              <div className="absolute top-2 left-2 sm:top-3 sm:left-3 z-10 pointer-events-none">
-                <span className="inline-block px-2 py-0.5 bg-accent backdrop-blur-sm text-white text-[8px] sm:text-[9px] font-mono tracking-[0.15em] uppercase">got</span>
+              {/* Accent glow: top-right corner spotlight — emphasizes the "received" item */}
+              <div className="absolute -top-4 -right-4 w-24 h-24 bg-accent/25 blur-2xl pointer-events-none" />
+              {/* Label: accent-colored stamp — visually dominant vs the faded "gave" label */}
+              <div className="absolute top-2 right-2 sm:top-3 sm:right-3 z-10 pointer-events-none">
+                <span className="inline-block px-2 py-0.5 bg-accent text-white text-[7px] sm:text-[9px] font-mono tracking-[0.25em] uppercase">받은 것</span>
               </div>
-              {/* item name: bottom */}
               <div className="absolute bottom-3 left-3 sm:bottom-4 sm:left-4 z-10 pointer-events-none">
-                <p className="text-white text-sm sm:text-base font-bold drop-shadow-lg leading-tight line-clamp-2 break-keep"
-                  style={{ textShadow: "0 1px 8px rgba(0,0,0,0.7)" }}>{trade.receivedItem}</p>
+                <p className="text-white text-xs sm:text-sm font-semibold drop-shadow-lg leading-tight line-clamp-2 break-keep">{trade.receivedItem}</p>
               </div>
             </div>
           </div>
 
           {/* Info section — always visible */}
           <div className="relative px-4 sm:px-5 py-3 overflow-hidden">
-            {/* watermark number */}
-            <span className="absolute right-2 top-1/2 -translate-y-1/2 text-7xl sm:text-8xl font-black font-mono text-warm-200/60 select-none leading-none pointer-events-none" aria-hidden="true">
+            {/* Large watermark round number — creates depth and visual anchor */}
+            <span
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-6xl sm:text-7xl font-black font-mono select-none leading-none pointer-events-none"
+              aria-hidden="true"
+              style={{ color: "var(--color-warm-200)", opacity: 0.55, letterSpacing: "-0.04em" }}
+            >
               {String(trade.round).padStart(2, "0")}
             </span>
             <div className="flex items-start justify-between gap-3 relative z-10">
@@ -289,7 +290,8 @@ export default function TradeCard({ trade, index }: TradeCardProps): React.JSX.E
             </div>
           </div>
 
-          <div className="h-0.5 bg-warm-200/50" />
+          {/* Bottom edge: accent color strip — like a stamped bottom seal */}
+          <div className="h-[3px]" style={{ background: `linear-gradient(to right, var(--color-accent) 0%, var(--color-accent-light) 50%, transparent 100%)`, opacity: 0.6 }} />
         </div>
       </div>
     </div>
