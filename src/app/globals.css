@@ -26,6 +26,7 @@
 html {
   scroll-behavior: smooth;
   overflow-x: hidden;
+  cursor: url('/cursor-pen.svg') 2 30, auto;
 }
 
 body {
@@ -33,6 +34,12 @@ body {
   background-color: var(--color-warm-50);
   color: var(--color-warm-900);
   overflow-x: hidden;
+}
+
+/* Interactive elements get pointer override */
+a, button, [role="button"], input, select, textarea, label,
+.card-perspective {
+  cursor: url('/cursor-pen.svg') 2 30, pointer;
 }
 
 /* === Hero grain texture === */

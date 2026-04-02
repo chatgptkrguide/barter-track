@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+  <!-- Monami 153 pen cursor - 3D isometric style, tilted for cursor use -->
+  <defs>
+    <linearGradient id="cBody" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#1e1a16"/>
+      <stop offset="40%" stop-color="#2d2520"/>
+      <stop offset="100%" stop-color="#1a1512"/>
+    </linearGradient>
+    <linearGradient id="cLabel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#f5f0ea"/>
+      <stop offset="100%" stop-color="#e0d5c8"/>
+    </linearGradient>
+    <linearGradient id="cTip" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#a08e78"/>
+      <stop offset="100%" stop-color="#7a6b5d"/>
+    </linearGradient>
+    <linearGradient id="cCap" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#2d2520"/>
+      <stop offset="40%" stop-color="#3d352d"/>
+      <stop offset="100%" stop-color="#2d2520"/>
+    </linearGradient>
+  </defs>
+  <!-- Shadow -->
+  <ellipse cx="18" cy="30" rx="8" ry="2" fill="#000" opacity="0.12"/>
+  <g transform="translate(16,16) rotate(-35) translate(-16,-16)">
+    <!-- Pen tip point -->
+    <polygon points="14.5,28 17.5,28 16,31" fill="#4a3f35"/>
+    <circle cx="16" cy="31" r="0.6" fill="#1a1512"/>
+    <!-- Tip cone -->
+    <polygon points="13,25 19,25 17.5,28 14.5,28" fill="url(#cTip)"/>
+    <rect x="13" y="25" width="6" height="0.8" rx="0.3" fill="#8a7560" opacity="0.5"/>
+    <!-- Grip -->
+    <rect x="12.5" y="22" width="7" height="3" rx="0.5" fill="#3d352d"/>
+    <line x1="13.5" y1="22.5" x2="13.5" y2="24.5" stroke="#4a3f35" stroke-width="0.3" opacity="0.5"/>
+    <line x1="15" y1="22.5" x2="15" y2="24.5" stroke="#4a3f35" stroke-width="0.3" opacity="0.5"/>
+    <line x1="16.5" y1="22.5" x2="16.5" y2="24.5" stroke="#4a3f35" stroke-width="0.3" opacity="0.5"/>
+    <line x1="18" y1="22.5" x2="18" y2="24.5" stroke="#4a3f35" stroke-width="0.3" opacity="0.5"/>
+    <!-- Body -->
+    <rect x="12.5" y="8" width="7" height="14" rx="0.8" fill="url(#cBody)" stroke="#3d352d" stroke-width="0.3"/>
+    <!-- Side highlight -->
+    <rect x="12.8" y="8.5" width="1" height="13" rx="0.5" fill="#2a2420" opacity="0.4"/>
+    <!-- Label (white sticker area) -->
+    <rect x="13.2" y="10" width="5.6" height="7" rx="0.5" fill="url(#cLabel)" stroke="#d0c4b4" stroke-width="0.2"/>
+    <!-- Accent band -->
+    <rect x="13.2" y="10" width="5.6" height="1.2" rx="0.3" fill="#c45d3e"/>
+    <rect x="13.2" y="10" width="5.6" height="0.5" rx="0.2" fill="#d46e52" opacity="0.5"/>
+    <!-- 153 text -->
+    <text x="16" y="15.5" text-anchor="middle" font-size="3.5" font-weight="900" fill="#c45d3e" font-family="Arial">153</text>
+    <!-- Cap -->
+    <rect x="12.2" y="2" width="7.6" height="6" rx="1" fill="url(#cCap)" stroke="#3d352d" stroke-width="0.3"/>
+    <!-- Cap red band -->
+    <rect x="13" y="2.5" width="6" height="1.2" rx="0.4" fill="#c45d3e"/>
+    <rect x="13" y="2.5" width="6" height="0.5" rx="0.2" fill="#d46e52" opacity="0.5"/>
+    <!-- Cap bottom rim -->
+    <rect x="12.5" y="7" width="7" height="1" rx="0.3" fill="#2d2520"/>
+    <!-- Clip -->
+    <rect x="19.2" y="2.5" width="1.5" height="5" rx="0.4" fill="#a08e78" stroke="#8a7560" stroke-width="0.2"/>
+    <circle cx="20" cy="7" r="0.6" fill="#8a7560"/>
+    <!-- Clip highlight -->
+    <rect x="19.5" y="3" width="0.5" height="3.5" rx="0.2" fill="#c4b8a6" opacity="0.3"/>
+  </g>
+</svg>
