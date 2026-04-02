@@ -1,13 +1,41 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
   <rect width="32" height="32" rx="7" fill="#2d2520"/>
-  <!-- Left arrow (give) -->
-  <path d="M6 13h8" stroke="#e8a690" stroke-width="2.2" stroke-linecap="round"/>
-  <path d="M11.5 10L14.5 13L11.5 16" fill="none" stroke="#e8a690" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-  <!-- Right arrow (receive) -->
-  <path d="M26 19h-8" stroke="#c45d3e" stroke-width="2.2" stroke-linecap="round"/>
-  <path d="M20.5 16L17.5 19L20.5 22" fill="none" stroke="#c45d3e" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-  <!-- Left dot (item A) -->
-  <circle cx="7.5" cy="19" r="2.8" fill="#c45d3e"/>
-  <!-- Right dot (item B) -->
-  <circle cx="24.5" cy="13" r="2.8" fill="#e8a690"/>
+  <!-- Pen body -->
+  <g transform="translate(16,16) rotate(-20) translate(-16,-16)">
+    <!-- Cap -->
+    <rect x="11" y="2" width="10" height="8" rx="1.5" fill="#1e1a16" stroke="#3d352d" stroke-width="0.5"/>
+    <!-- Cap red band -->
+    <rect x="12" y="3" width="8" height="2" rx="0.8" fill="#c45d3e"/>
+    <!-- Clip -->
+    <rect x="21" y="3" width="2" height="6" rx="0.6" fill="#a08e78"/>
+    <circle cx="22" cy="8.5" r="0.8" fill="#8a7560"/>
+    <!-- Cap bottom rim -->
+    <rect x="11.5" y="9" width="9" height="1.5" rx="0.5" fill="#2d2520"/>
+    <!-- Body -->
+    <rect x="11.5" y="10.5" width="9" height="14" rx="0.8" fill="#121010" stroke="#2d2520" stroke-width="0.4"/>
+    <!-- Label sticker -->
+    <rect x="12.5" y="12" width="7" height="8" rx="0.8" fill="#f5f0ea"/>
+    <!-- MONAMI text hint -->
+    <rect x="13.5" y="13" width="5" height="0.8" rx="0.3" fill="#a08e78"/>
+    <!-- Red line -->
+    <rect x="13.8" y="14.2" width="4.4" height="0.5" rx="0.2" fill="#c45d3e"/>
+    <!-- 153 -->
+    <text x="16" y="18.5" text-anchor="middle" font-size="4" font-weight="900" fill="#c45d3e" font-family="Arial">153</text>
+    <!-- Barcode lines -->
+    <g opacity="0.3">
+      <rect x="13.5" y="20.5" width="0.4" height="1.5" fill="#8a7560"/>
+      <rect x="14.2" y="20.5" width="0.6" height="1.5" fill="#8a7560"/>
+      <rect x="15.1" y="20.5" width="0.3" height="1.5" fill="#8a7560"/>
+      <rect x="15.7" y="20.5" width="0.7" height="1.5" fill="#8a7560"/>
+      <rect x="16.7" y="20.5" width="0.4" height="1.5" fill="#8a7560"/>
+      <rect x="17.4" y="20.5" width="0.5" height="1.5" fill="#8a7560"/>
+      <rect x="18.2" y="20.5" width="0.3" height="1.5" fill="#8a7560"/>
+    </g>
+    <!-- Grip -->
+    <rect x="12" y="24.5" width="8" height="3" rx="0.5" fill="#2d2520"/>
+    <!-- Tip cone -->
+    <polygon points="12,27.5 20,27.5 17.5,30.5 14.5,30.5" fill="#a08e78"/>
+    <!-- Ball point -->
+    <circle cx="16" cy="31" r="0.6" fill="#1a1512"/>
+  </g>
 </svg>
