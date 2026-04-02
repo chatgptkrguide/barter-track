@@ -25,12 +25,14 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 body {
   font-family: var(--font-sans), system-ui, sans-serif;
   background-color: var(--color-warm-50);
   color: var(--color-warm-900);
+  overflow-x: hidden;
 }
 
 /* === Hero grain texture === */
@@ -88,21 +90,14 @@ body {
   animation: draw-connector 1s ease-out 0.3s both;
 }
 
-/* === Placeholder shimmer === */
-@keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
+/* === Placeholder bob animation === */
+@keyframes placeholder-bob {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-6px); }
 }
 
-.placeholder-shimmer {
-  background: linear-gradient(
-    90deg,
-    var(--color-warm-100) 25%,
-    var(--color-warm-200) 50%,
-    var(--color-warm-100) 75%
-  );
-  background-size: 200% 100%;
-  animation: shimmer 3s ease-in-out infinite;
+.placeholder-bob {
+  animation: placeholder-bob 3s ease-in-out infinite;
 }
 
 /* === Grain overlay for cards === */
@@ -112,7 +107,19 @@ body {
   inset: 0;
   opacity: 0.04;
   pointer-events: none;
+  z-index: 40;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+}
+
+/* === 3D Card perspective === */
+.card-perspective {
+  perspective: 800px;
+}
+
+@media (hover: none) {
+  .card-perspective {
+    perspective: none;
+  }
 }
 
 /* === Floating elements === */
@@ -175,7 +182,10 @@ body {
   .grain-animate,
   .card-animate,
   .connector-draw,
-  .placeholder-shimmer {
+  .placeholder-bob {
     animation: none !important;
+  }
+  .card-perspective {
+    perspective: none;
   }
 }

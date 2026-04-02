@@ -146,7 +146,7 @@ function TradeFlowChain(): React.ReactElement {
 
 export default function Home() {
   return (
-    <main className="min-h-screen relative">
+    <main className="min-h-screen relative overflow-x-hidden">
       <GrainOverlay />
       <FloatingElements />
 

@@ -1,114 +1,90 @@
 "use client";
 
 import Image from "next/image";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import type { Trade } from "@/data/trades";
+import ItemIllustration from "./ItemIllustration";
 
 interface TradeCardProps {
   trade: Trade;
   index: number;
 }
 
-function PlaceholderArt({ side }: { side: "given" | "received" }): React.JSX.Element {
+interface TiltState {
+  rotateX: number;
+  rotateY: number;
+  shadowX: number;
+  shadowY: number;
+}
+
+const TILT_MAX = 8;
+
+function PhotoPlaceholder({
+  itemName,
+}: {
+  itemName: string;
+}): React.JSX.Element {
   return (
-    <div className="absolute inset-0 bg-warm-100 flex items-center justify-center overflow-hidden">
-      {/* Background pattern */}
-      <div className="absolute inset-0 opacity-[0.06]" style={{
-        backgroundImage: `url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='2' cy='2' r='1' fill='%234a3f35'/%3E%3C/svg%3E")`,
-        backgroundSize: "20px 20px",
-      }} />
-      {/* Decorative ring */}
-      <div className="absolute w-32 h-32 sm:w-40 sm:h-40 rounded-full border border-warm-200/60" />
-      <div className="absolute w-20 h-20 sm:w-24 sm:h-24 rounded-full border border-dashed border-warm-300/50" />
-      {/* Center content */}
-      <div className="relative z-10 flex flex-col items-center gap-2 sm:gap-3">
-        {side === "given" ? (
-          <svg width="36" height="36" viewBox="0 0 36 36" fill="none" className="text-warm-400/50 w-8 h-8 sm:w-9 sm:h-9">
-            <path d="M18 4v28M4 18h28" stroke="currentColor" strokeWidth="1" />
-            <rect x="8" y="8" width="20" height="20" rx="10" stroke="currentColor" strokeWidth="1" strokeDasharray="3 2" />
-          </svg>
-        ) : (
-          <svg width="36" height="36" viewBox="0 0 36 36" fill="none" className="text-accent/40 w-8 h-8 sm:w-9 sm:h-9">
-            <path d="M10 18h16m0 0l-6-6m6 6l-6 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-            <circle cx="18" cy="18" r="14" stroke="currentColor" strokeWidth="1" />
-          </svg>
-        )}
-        <span className="text-[9px] sm:text-[10px] font-mono tracking-[0.15em] text-warm-400/70 uppercase">
-          {side === "given" ? "photo" : "photo"}
-        </span>
+    <div className="absolute inset-0 flex flex-col items-center justify-center overflow-hidden bg-warm-100">
+      <div
+        className="absolute inset-0 opacity-[0.05]"
+        style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='2' cy='2' r='1' fill='%234a3f35'/%3E%3C/svg%3E")`,
+          backgroundSize: "24px 24px",
+        }}
+      />
+      <div className="absolute w-40 h-40 sm:w-48 sm:h-48 rounded-full border border-warm-200/40" />
+      <div className="relative z-10 placeholder-bob">
+        <ItemIllustration itemName={itemName} className="w-28 h-28 sm:w-36 sm:h-36" />
       </div>
-      {/* Corner accent */}
-      <div className={`absolute ${side === "given" ? "top-3 left-3 sm:top-4 sm:left-4" : "top-3 right-3 sm:top-4 sm:right-4"}`}>
-        <div className={`w-6 h-6 sm:w-8 sm:h-8 border-t border-l ${side === "given" ? "border-warm-300/40" : "border-accent/20"} ${side === "received" ? "border-l-0 border-r" : ""}`} />
-      </div>
-      <div className={`absolute ${side === "given" ? "bottom-3 right-3 sm:bottom-4 sm:right-4" : "bottom-3 left-3 sm:bottom-4 sm:left-4"}`}>
-        <div className={`w-6 h-6 sm:w-8 sm:h-8 border-b border-r ${side === "given" ? "border-warm-300/40" : "border-accent/20"} ${side === "received" ? "border-r-0 border-l" : ""}`} />
-      </div>
+      <div className="absolute top-3 left-3 w-5 h-5 border-t border-l border-warm-300/30" />
+      <div className="absolute top-3 right-3 w-5 h-5 border-t border-r border-warm-300/30" />
+      <div className="absolute bottom-3 left-3 w-5 h-5 border-b border-l border-warm-300/30" />
+      <div className="absolute bottom-3 right-3 w-5 h-5 border-b border-r border-warm-300/30" />
     </div>
   );
 }
 
-function ItemImage({
+function TradePhoto({
   src,
   alt,
-  side,
+  itemName,
+  className = "",
 }: {
   src: string;
   alt: string;
-  side: "given" | "received";
+  itemName: string;
+  className?: string;
 }): React.JSX.Element {
   const [imgError, setImgError] = useState(false);
 
   return (
-    <div className="relative w-full aspect-[3/4] sm:aspect-[4/5] overflow-hidden">
+    <div className={`relative overflow-hidden ${className}`}>
       {!imgError ? (
         <Image
           src={src}
           alt={alt}
           fill
-          className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+          className="object-cover"
           onError={() => setImgError(true)}
-          sizes="(max-width: 640px) 45vw, (max-width: 768px) 45vw, 280px"
+          sizes="(max-width: 640px) 90vw, (max-width: 1024px) 60vw, 480px"
         />
       ) : (
-        <PlaceholderArt side={side} />
+        <PhotoPlaceholder itemName={itemName} />
       )}
-      {/* Bottom gradient */}
-      <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-warm-900/70 via-warm-900/20 to-transparent pointer-events-none" />
-      {/* Item name */}
-      <div className="absolute bottom-2 left-2 right-2 sm:bottom-3 sm:left-3 sm:right-3">
-        <p className="text-white text-xs sm:text-sm md:text-base font-medium drop-shadow-lg leading-tight">
-          {alt}
-        </p>
-      </div>
     </div>
   );
 }
 
-function DramaticConnector(): React.JSX.Element {
+function ExchangeArrow(): React.JSX.Element {
   return (
-    <div className="absolute inset-0 flex items-center justify-center z-10 pointer-events-none">
-      <div className="relative">
-        <div className="absolute -inset-3 sm:-inset-4 rounded-full bg-accent/10 blur-xl" />
-        <svg
-          width="44"
-          height="44"
-          viewBox="0 0 56 56"
-          fill="none"
-          className="relative drop-shadow-lg w-10 h-10 sm:w-11 sm:h-11 md:w-14 md:h-14"
-        >
-          <circle cx="28" cy="28" r="26" stroke="var(--color-accent-light)" strokeWidth="1" opacity="0.4" />
-          <circle cx="28" cy="28" r="20" fill="var(--color-accent)" />
-          <path
-            d="M18 28h14m0 0l-5-5m5 5l-5 5"
-            stroke="white"
-            strokeWidth="2.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="connector-draw"
-          />
-        </svg>
-      </div>
+    <div className="relative flex items-center justify-center">
+      <div className="absolute -inset-2 rounded-full bg-accent/10 blur-lg" />
+      <svg width="40" height="40" viewBox="0 0 40 40" fill="none" className="relative drop-shadow-md w-8 h-8 sm:w-10 sm:h-10">
+        <circle cx="20" cy="20" r="18" fill="var(--color-accent)" />
+        <path d="M13 17h10m0 0l-4-4m4 4l-4 4" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="connector-draw" />
+        <path d="M27 23H17m0 0l4 4m-4-4l4-4" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" opacity="0.5" className="connector-draw" />
+      </svg>
     </div>
   );
 }
@@ -116,29 +92,48 @@ function DramaticConnector(): React.JSX.Element {
 export default function TradeCard({ trade, index }: TradeCardProps): React.JSX.Element {
   const cardRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
-  const [isHovered, setIsHovered] = useState(false);
+  const [isTouchDevice, setIsTouchDevice] = useState(false);
+  const [tapped, setTapped] = useState(false);
+  const [tilt, setTilt] = useState<TiltState>({ rotateX: 0, rotateY: 0, shadowX: 0, shadowY: 0 });
+
   const isEven = index % 2 === 1;
+  const isActive = tilt.rotateX !== 0 || tilt.rotateY !== 0 || tapped;
+
+  useEffect(() => {
+    const handleTouch = (): void => { setIsTouchDevice(true); };
+    window.addEventListener("touchstart", handleTouch, { once: true });
+    return () => { window.removeEventListener("touchstart", handleTouch); };
+  }, []);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.disconnect();
-        }
+        if (entry.isIntersecting) { setIsVisible(true); observer.disconnect(); }
       },
       { threshold: 0.1 }
     );
-
     const currentRef = cardRef.current;
-    if (currentRef) {
-      observer.observe(currentRef);
-    }
-
-    return () => {
-      observer.disconnect();
-    };
+    if (currentRef) observer.observe(currentRef);
+    return () => { observer.disconnect(); };
   }, []);
+
+  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    if (isTouchDevice) return;
+    const card = cardRef.current;
+    if (!card) return;
+    const rect = card.getBoundingClientRect();
+    const percentX = (e.clientX - (rect.left + rect.width / 2)) / (rect.width / 2);
+    const percentY = (e.clientY - (rect.top + rect.height / 2)) / (rect.height / 2);
+    setTilt({ rotateX: -percentY * TILT_MAX, rotateY: percentX * TILT_MAX, shadowX: percentX * 14, shadowY: percentY * 14 });
+  }, [isTouchDevice]);
+
+  const handleMouseLeave = useCallback((): void => {
+    setTilt({ rotateX: 0, rotateY: 0, shadowX: 0, shadowY: 0 });
+  }, []);
+
+  const handleTap = useCallback((): void => {
+    if (isTouchDevice) setTapped((prev) => !prev);
+  }, [isTouchDevice]);
 
   return (
     <div
@@ -146,92 +141,104 @@ export default function TradeCard({ trade, index }: TradeCardProps): React.JSX.E
       className={`relative ${isVisible ? "card-animate" : "opacity-0"}`}
       style={{ animationDelay: `${index * 120}ms` }}
     >
-      {/* Round number */}
-      <div
-        className={`flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4 ${isEven ? "md:justify-end" : ""}`}
-      >
-        <span className="text-5xl sm:text-6xl md:text-8xl font-bold text-warm-200/70 font-mono leading-none select-none">
-          {String(trade.round).padStart(2, "0")}
-        </span>
-        <div className={`flex flex-col ${isEven ? "md:items-end" : ""}`}>
-          <span className="text-[9px] sm:text-[10px] font-mono tracking-[0.2em] text-warm-400 uppercase">
-            Round
-          </span>
-          <span className="text-[10px] sm:text-xs text-warm-400 font-mono">{trade.date}</span>
-        </div>
-      </div>
-
-      {/* Main card */}
-      <div
-        className={`
-          group relative bg-white rounded-xl sm:rounded-2xl overflow-hidden
-          border border-warm-200/80
-          transition-all duration-500 ease-out
-          ${isHovered ? "shadow-2xl shadow-warm-900/10 -translate-y-1" : "shadow-md shadow-warm-900/5"}
-          ${isEven ? "md:ml-12" : "md:mr-12"}
-        `}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-      >
-        {/* Image area */}
-        <div className="relative flex">
-          <div className="flex-1 min-w-0">
-            <ItemImage src={trade.givenImage} alt={trade.givenItem} side="given" />
-            <div className="absolute top-2 left-2 sm:top-3 sm:left-3 z-20">
-              <span className="inline-block px-1.5 py-0.5 sm:px-2 bg-warm-900/50 backdrop-blur-sm text-white text-[8px] sm:text-[10px] font-mono tracking-wider rounded-sm uppercase">
-                내놓은 것
-              </span>
-            </div>
-          </div>
-
-          <DramaticConnector />
-
-          <div className="flex-1 min-w-0">
-            <ItemImage src={trade.receivedImage} alt={trade.receivedItem} side="received" />
-            <div className="absolute top-2 right-2 sm:top-3 sm:right-3 z-20">
-              <span className="inline-block px-1.5 py-0.5 sm:px-2 bg-accent/80 backdrop-blur-sm text-white text-[8px] sm:text-[10px] font-mono tracking-wider rounded-sm uppercase">
-                받은 것
-              </span>
-            </div>
-          </div>
-        </div>
-
-        {/* Info strip - always visible on mobile, hover on desktop */}
+      <div className="card-perspective" onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave} onClick={handleTap}>
         <div
           className={`
-            relative px-3 sm:px-5 overflow-hidden transition-all duration-500 ease-out
-            max-h-40 py-3 opacity-100
-            md:py-0 md:max-h-0 md:opacity-0
-            ${isHovered ? "md:max-h-40 md:py-4 md:opacity-100" : ""}
+            relative bg-white overflow-hidden rounded-xl sm:rounded-2xl
+            border border-warm-200/80 grain-overlay
+            ${isEven ? "md:ml-16" : "md:mr-16"}
           `}
+          style={{
+            transform: `perspective(800px) rotateX(${tilt.rotateX}deg) rotateY(${tilt.rotateY}deg)`,
+            transition: tilt.rotateX === 0 && tilt.rotateY === 0
+              ? "transform 0.5s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.5s ease"
+              : "transform 0.1s ease-out, box-shadow 0.1s ease-out",
+            transformStyle: "preserve-3d",
+            boxShadow: isActive
+              ? `${tilt.shadowX}px ${tilt.shadowY + 8}px 32px rgba(45,37,32,0.16), 0 2px 8px rgba(45,37,32,0.08)`
+              : "0 4px 16px rgba(45,37,32,0.07), 0 1px 4px rgba(45,37,32,0.04)",
+          }}
         >
-          <div className="flex items-start justify-between gap-3 sm:gap-4">
-            <div className="flex-1 min-w-0">
-              {trade.note && (
-                <p className="text-xs sm:text-sm text-warm-600 leading-relaxed italic border-l-2 border-accent/40 pl-2 sm:pl-3">
-                  &ldquo;{trade.note}&rdquo;
-                </p>
-              )}
-            </div>
-            <div className="shrink-0 text-right">
-              {trade.personName !== "???" && (
-                <p className="text-[10px] sm:text-xs text-warm-400 font-mono">
-                  with <span className="text-warm-600">{trade.personName}</span>
-                </p>
-              )}
-              {trade.location !== "???" && (
-                <p className="text-[9px] sm:text-[10px] text-warm-400 font-mono mt-0.5">
-                  {trade.location}
-                </p>
-              )}
+          {/* Round badge */}
+          <div className="absolute top-3 left-3 sm:top-4 sm:left-4 z-30 pointer-events-none">
+            <div className="flex items-center gap-1.5">
+              <span className="text-3xl sm:text-4xl md:text-5xl font-bold text-white/20 font-mono leading-none select-none drop-shadow-sm">
+                {String(trade.round).padStart(2, "0")}
+              </span>
+              <div className="flex flex-col">
+                <span className="text-[8px] sm:text-[9px] font-mono tracking-[0.2em] text-white/50 uppercase">Round</span>
+                <span className="text-[9px] sm:text-[10px] text-white/40 font-mono">{trade.date}</span>
+              </div>
             </div>
           </div>
-        </div>
 
-        {/* Bottom accent */}
-        <div
-          className={`h-0.5 transition-all duration-500 ease-out ${isHovered ? "bg-accent" : "bg-warm-200/50"}`}
-        />
+          {/* Photo area - stacked/overlapping */}
+          <div className="relative w-full aspect-[4/5] sm:aspect-[3/4] lg:aspect-[5/4]">
+            {/* Background: given photo */}
+            <div className="absolute inset-0">
+              <TradePhoto src={trade.givenImage} alt={trade.givenItem} itemName={trade.givenItem} className="w-full h-full" />
+              <div className="absolute inset-0 bg-warm-900/25" />
+              <div className="absolute inset-0 bg-gradient-to-br from-warm-900/40 via-transparent to-warm-900/50" />
+            </div>
+
+            {/* Diagonal decoration */}
+            <div className="absolute inset-0 pointer-events-none z-10 overflow-hidden hidden sm:block">
+              <div className="absolute w-[200%] h-px bg-white/15" style={{ top: "58%", left: "-20%", transform: "rotate(-18deg)" }} />
+            </div>
+
+            {/* Given item label */}
+            <div className="absolute top-12 left-3 sm:top-14 sm:left-4 z-20 pointer-events-none">
+              <span className="inline-block px-2 py-0.5 bg-warm-900/50 backdrop-blur-sm text-white text-[8px] sm:text-[10px] font-mono tracking-wider rounded-sm">내놓은 것</span>
+              <p className="mt-1 text-white/85 text-xs sm:text-sm font-medium drop-shadow-lg max-w-[55%] leading-snug line-clamp-2 break-keep">{trade.givenItem}</p>
+            </div>
+
+            {/* Foreground: received photo (overlapping frame) */}
+            <div
+              className="absolute z-20 right-3 bottom-3 sm:right-5 sm:bottom-5 lg:right-6 lg:bottom-6 w-[55%] sm:w-[48%] lg:w-[44%] aspect-[3/4] rounded-lg overflow-hidden border-2 border-white/80 shadow-xl shadow-warm-900/30"
+              style={{ transform: "translateZ(20px)" }}
+            >
+              <TradePhoto src={trade.receivedImage} alt={trade.receivedItem} itemName={trade.receivedItem} className="w-full h-full" />
+              <div className="absolute top-2 left-2 z-10">
+                <span className="inline-block px-1.5 py-0.5 bg-accent/85 backdrop-blur-sm text-white text-[8px] sm:text-[10px] font-mono tracking-wider rounded-sm">받은 것</span>
+              </div>
+              <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-warm-900/70 to-transparent pointer-events-none" />
+              <div className="absolute bottom-2 left-2 right-2 z-10">
+                <p className="text-white text-xs sm:text-sm font-medium drop-shadow-lg leading-tight line-clamp-2 break-keep">{trade.receivedItem}</p>
+              </div>
+            </div>
+
+            {/* Exchange arrow */}
+            <div
+              className="absolute z-20 pointer-events-none right-[52%] bottom-[40%] sm:right-[44%] sm:bottom-[36%] lg:right-[40%] lg:bottom-[34%]"
+              style={{ transform: "translateZ(30px)" }}
+            >
+              <ExchangeArrow />
+            </div>
+          </div>
+
+          {/* Info section */}
+          <div className={`relative px-4 sm:px-5 overflow-hidden transition-all duration-500 ease-out py-3 max-h-44 opacity-100 md:py-0 md:max-h-0 md:opacity-0 ${isActive ? "md:max-h-44 md:py-4 md:opacity-100" : ""}`}>
+            <div className="flex items-start justify-between gap-3">
+              <div className="flex-1 min-w-0">
+                {trade.note && (
+                  <p className="text-xs sm:text-sm text-warm-600 leading-relaxed italic border-l-2 border-accent/40 pl-2 sm:pl-3 line-clamp-3 break-keep">
+                    &ldquo;{trade.note}&rdquo;
+                  </p>
+                )}
+              </div>
+              <div className="shrink-0 text-right">
+                {trade.personName !== "???" && (
+                  <p className="text-[10px] sm:text-xs text-warm-400 font-mono">with <span className="text-warm-600">{trade.personName}</span></p>
+                )}
+                {trade.location !== "???" && (
+                  <p className="text-[9px] sm:text-[10px] text-warm-400 font-mono mt-0.5">{trade.location}</p>
+                )}
+              </div>
+            </div>
+          </div>
+
+          <div className={`h-0.5 transition-all duration-500 ease-out ${isActive ? "bg-accent" : "bg-warm-200/50"}`} />
+        </div>
       </div>
     </div>
   );

@@ -25,7 +25,7 @@ export default function GrainOverlay({
 
   return (
     <div
-      className={`pointer-events-none fixed inset-0 z-50 ${className}`}
+      className={`pointer-events-none fixed inset-0 z-40 ${className}`}
       aria-hidden="true"
       style={{ opacity }}
     >
