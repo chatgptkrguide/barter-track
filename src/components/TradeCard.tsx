@@ -17,7 +17,7 @@ interface TiltState {
   shadowY: number;
 }
 
-const TILT_MAX = 8;
+const TILT_MAX = 4;
 
 function PhotoPlaceholder({
   itemName,
@@ -49,14 +49,42 @@ function TradePhoto({
   src,
   alt,
   itemName,
+  cutout,
   className = "",
 }: {
   src: string;
   alt: string;
   itemName: string;
+  cutout?: string;
   className?: string;
 }): React.JSX.Element {
   const [imgError, setImgError] = useState(false);
+  const [cutoutError, setCutoutError] = useState(false);
+
+  // cutout(누끼) 사진이 있으면 우선 사용
+  if (cutout && !cutoutError) {
+    return (
+      <div className={`relative overflow-hidden bg-warm-100 flex items-center justify-center ${className}`}>
+        <div
+          className="absolute inset-0 opacity-[0.03]"
+          style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='2' cy='2' r='1' fill='%234a3f35'/%3E%3C/svg%3E")`,
+            backgroundSize: "24px 24px",
+          }}
+        />
+        <div className="relative w-[70%] h-[70%] placeholder-bob">
+          <Image
+            src={cutout}
+            alt={alt}
+            fill
+            className="object-contain drop-shadow-lg"
+            onError={() => setCutoutError(true)}
+            sizes="(max-width: 640px) 45vw, 300px"
+          />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className={`relative overflow-hidden ${className}`}>
@@ -124,7 +152,7 @@ export default function TradeCard({ trade, index }: TradeCardProps): React.JSX.E
     const rect = card.getBoundingClientRect();
     const percentX = (e.clientX - (rect.left + rect.width / 2)) / (rect.width / 2);
     const percentY = (e.clientY - (rect.top + rect.height / 2)) / (rect.height / 2);
-    setTilt({ rotateX: -percentY * TILT_MAX, rotateY: percentX * TILT_MAX, shadowX: percentX * 14, shadowY: percentY * 14 });
+    setTilt({ rotateX: -percentY * TILT_MAX, rotateY: percentX * TILT_MAX, shadowX: percentX * 6, shadowY: percentY * 6 });
   }, [isTouchDevice]);
 
   const handleMouseLeave = useCallback((): void => {
@@ -177,7 +205,7 @@ export default function TradeCard({ trade, index }: TradeCardProps): React.JSX.E
 
             {/* Left panel: given item */}
             <div className="trade-given relative w-[47%] overflow-hidden">
-              <TradePhoto src={trade.givenImage} alt={trade.givenItem} itemName={trade.givenItem} className="w-full h-full" />
+              <TradePhoto src={trade.givenImage} alt={trade.givenItem} itemName={trade.givenItem} cutout={trade.givenCutout} className="w-full h-full" />
               <div className="absolute inset-0 bg-gradient-to-r from-warm-900/30 via-transparent to-warm-900/50" />
               <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-warm-900/70 to-transparent pointer-events-none" />
               <div className="absolute bottom-3 left-3 sm:bottom-4 sm:left-4 z-10 pointer-events-none">
@@ -198,7 +226,7 @@ export default function TradeCard({ trade, index }: TradeCardProps): React.JSX.E
 
             {/* Right panel: received item */}
             <div className="trade-received relative w-[53%] ml-auto overflow-hidden">
-              <TradePhoto src={trade.receivedImage} alt={trade.receivedItem} itemName={trade.receivedItem} className="w-full h-full" />
+              <TradePhoto src={trade.receivedImage} alt={trade.receivedItem} itemName={trade.receivedItem} cutout={trade.receivedCutout} className="w-full h-full" />
               <div className="absolute inset-0 bg-gradient-to-l from-warm-900/30 via-transparent to-warm-900/50" />
               <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-warm-900/70 to-transparent pointer-events-none" />
               <div className="absolute top-2 left-3 sm:top-3 sm:left-4 z-10">
@@ -210,8 +238,8 @@ export default function TradeCard({ trade, index }: TradeCardProps): React.JSX.E
             </div>
           </div>
 
-          {/* Info section */}
-          <div className={`relative px-4 sm:px-5 overflow-hidden transition-all duration-500 ease-out py-3 max-h-44 opacity-100 md:py-0 md:max-h-0 md:opacity-0 ${isActive ? "md:max-h-44 md:py-4 md:opacity-100" : ""}`}>
+          {/* Info section — always visible */}
+          <div className="relative px-4 sm:px-5 py-3">
             <div className="flex items-start justify-between gap-3">
               <div className="flex-1 min-w-0">
                 {trade.note && (
@@ -231,7 +259,7 @@ export default function TradeCard({ trade, index }: TradeCardProps): React.JSX.E
             </div>
           </div>
 
-          <div className={`h-0.5 transition-all duration-500 ease-out ${isActive ? "bg-accent" : "bg-warm-200/50"}`} />
+          <div className="h-0.5 bg-warm-200/50" />
         </div>
       </div>
     </div>

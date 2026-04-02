@@ -207,27 +207,15 @@ a, button, [role="button"], input, select, textarea, label,
   50%       { transform: scale(1.1); }
 }
 
-/* Hover: given item nudges left, received nudges right */
+/* Entry animations only — no hover nudge */
 .trade-given {
   animation: trade-given-enter 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
-  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 .trade-received {
   animation: trade-received-enter 0.45s cubic-bezier(0.22, 1, 0.36, 1) 0.18s both;
-  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 .trade-arrow {
-  animation:
-    trade-arrow-pop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) 0.32s both,
-    trade-arrow-pulse 2.4s ease-in-out 0.8s infinite;
-}
-
-/* Parent hover triggers panel nudge */
-.trade-split:hover .trade-given {
-  transform: translateX(-4px);
-}
-.trade-split:hover .trade-received {
-  transform: translateX(4px);
+  animation: trade-arrow-pop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) 0.32s both;
 }
 
 /* === Reduced motion === */

@@ -5,6 +5,8 @@ interface Trade {
   receivedItem: string;
   givenImage: string;
   receivedImage: string;
+  givenCutout?: string;
+  receivedCutout?: string;
   personName: string;
   location: string;
   date: string;
@@ -19,6 +21,9 @@ const trades: Trade[] = [
     receivedItem: "왕꿈틀이",
     givenImage: "/trades/round1-given.jpg",
     receivedImage: "/trades/round1-received.jpg",
+    // 누끼(배경 제거) 사진: /trades/cutout/ 폴더에 PNG로 저장
+    // givenCutout: "/trades/cutout/monami-pen.png",
+    // receivedCutout: "/trades/cutout/wang-kkumteul.png",
     personName: "???",
     location: "???",
     date: "2026-04-02",
@@ -31,6 +36,8 @@ const trades: Trade[] = [
     receivedItem: "수능시계",
     givenImage: "/trades/round2-given.jpg",
     receivedImage: "/trades/round2-received.jpg",
+    // givenCutout: "/trades/cutout/wang-kkumteul.png",
+    // receivedCutout: "/trades/cutout/suneung-clock.png",
     personName: "???",
     location: "???",
     date: "2026-04-02",
