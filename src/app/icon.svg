@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+  <rect width="32" height="32" rx="7" fill="#2d2520"/>
+  <!-- Left arrow (give) -->
+  <path d="M6 13h8" stroke="#e8a690" stroke-width="2.2" stroke-linecap="round"/>
+  <path d="M11.5 10L14.5 13L11.5 16" fill="none" stroke="#e8a690" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Right arrow (receive) -->
+  <path d="M26 19h-8" stroke="#c45d3e" stroke-width="2.2" stroke-linecap="round"/>
+  <path d="M20.5 16L17.5 19L20.5 22" fill="none" stroke="#c45d3e" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Left dot (item A) -->
+  <circle cx="7.5" cy="19" r="2.8" fill="#c45d3e"/>
+  <!-- Right dot (item B) -->
+  <circle cx="24.5" cy="13" r="2.8" fill="#e8a690"/>
+</svg>
