@@ -107,11 +107,30 @@ function TradePhoto({
 function ExchangeArrow(): React.JSX.Element {
   return (
     <div className="relative flex items-center justify-center">
-      <div className="absolute -inset-2 rounded-full bg-accent/10 blur-lg" />
-      <svg width="40" height="40" viewBox="0 0 40 40" fill="none" className="relative drop-shadow-md w-8 h-8 sm:w-10 sm:h-10">
-        <circle cx="20" cy="20" r="18" fill="var(--color-accent)" />
-        <path d="M13 17h10m0 0l-4-4m4 4l-4 4" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="connector-draw" />
-        <path d="M27 23H17m0 0l4 4m-4-4l4-4" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" opacity="0.5" className="connector-draw" />
+      {/* Outer glow ring */}
+      <div className="absolute -inset-3 rounded-full bg-accent/15 blur-xl" />
+      {/* Ripple ring */}
+      <div className="absolute inset-0 rounded-full border border-accent/30 scale-150 opacity-40 animate-[trade-arrow-pulse_2s_ease-in-out_infinite]" />
+      <svg
+        width="44" height="44" viewBox="0 0 44 44" fill="none"
+        className="relative drop-shadow-lg w-9 h-9 sm:w-11 sm:h-11"
+      >
+        {/* Slightly rough circle — not perfectly uniform stroke */}
+        <circle cx="22" cy="22" r="19" fill="var(--color-accent)" />
+        <circle cx="22" cy="22" r="19" fill="none" stroke="white" strokeOpacity="0.18" strokeWidth="1" strokeDasharray="4 3" />
+        {/* Top arrow: bold, full opacity */}
+        <path
+          d="M14 19h11m0 0l-4.5-4m4.5 4l-4.5 4"
+          stroke="white" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"
+          className="connector-draw"
+        />
+        {/* Bottom arrow: muted, reversed — feels like a handshake */}
+        <path
+          d="M30 25H19m0 0l4.5 4M19 25l4.5-4"
+          stroke="white" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"
+          strokeOpacity="0.45"
+          className="connector-draw"
+        />
       </svg>
     </div>
   );
@@ -187,16 +206,15 @@ export default function TradeCard({ trade, index }: TradeCardProps): React.JSX.E
               : "0 4px 16px rgba(45,37,32,0.07), 0 1px 4px rgba(45,37,32,0.04)",
           }}
         >
-          {/* Round badge */}
+          {/* Round badge — top-left stamp */}
           <div className="absolute top-3 left-3 sm:top-4 sm:left-4 z-30 pointer-events-none">
-            <div className="flex items-center gap-1.5">
-              <span className="text-3xl sm:text-4xl md:text-5xl font-bold text-white/20 font-mono leading-none select-none drop-shadow-sm">
+            <div className="flex flex-col gap-0.5">
+              <span className="text-[9px] sm:text-[10px] font-mono tracking-[0.25em] text-white/70 uppercase leading-none">Round</span>
+              <span className="text-4xl sm:text-5xl font-black text-white/90 font-mono leading-none select-none"
+                style={{ textShadow: "0 2px 12px rgba(0,0,0,0.5), 0 0 1px rgba(0,0,0,0.8)" }}>
                 {String(trade.round).padStart(2, "0")}
               </span>
-              <div className="flex flex-col">
-                <span className="text-[8px] sm:text-[9px] font-mono tracking-[0.2em] text-white/50 uppercase">Round</span>
-                <span className="text-[9px] sm:text-[10px] text-white/40 font-mono">{trade.date}</span>
-              </div>
+              <span className="text-[9px] sm:text-[10px] text-white/55 font-mono leading-none mt-0.5">{trade.date}</span>
             </div>
           </div>
 
@@ -208,9 +226,14 @@ export default function TradeCard({ trade, index }: TradeCardProps): React.JSX.E
               <TradePhoto src={trade.givenImage} alt={trade.givenItem} itemName={trade.givenItem} cutout={trade.givenCutout} className="w-full h-full" />
               <div className="absolute inset-0 bg-gradient-to-r from-warm-900/30 via-transparent to-warm-900/50" />
               <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-warm-900/70 to-transparent pointer-events-none" />
+              {/* label: top-right corner */}
+              <div className="absolute top-2 right-2 sm:top-3 sm:right-3 z-10 pointer-events-none">
+                <span className="inline-block px-2 py-0.5 bg-warm-900/70 backdrop-blur-sm text-white/80 text-[8px] sm:text-[9px] font-mono tracking-[0.15em] uppercase">gave</span>
+              </div>
+              {/* item name: bottom */}
               <div className="absolute bottom-3 left-3 sm:bottom-4 sm:left-4 z-10 pointer-events-none">
-                <span className="inline-block px-1.5 py-0.5 bg-warm-900/60 backdrop-blur-sm text-white text-[8px] sm:text-[10px] font-mono tracking-wider rounded-sm">내놓은 것</span>
-                <p className="mt-1 text-white/90 text-xs sm:text-sm font-medium drop-shadow-lg leading-snug line-clamp-2 break-keep max-w-[90%]">{trade.givenItem}</p>
+                <p className="text-white text-sm sm:text-base font-bold drop-shadow-lg leading-tight line-clamp-2 break-keep max-w-[90%]"
+                  style={{ textShadow: "0 1px 8px rgba(0,0,0,0.7)" }}>{trade.givenItem}</p>
               </div>
             </div>
 
@@ -229,18 +252,25 @@ export default function TradeCard({ trade, index }: TradeCardProps): React.JSX.E
               <TradePhoto src={trade.receivedImage} alt={trade.receivedItem} itemName={trade.receivedItem} cutout={trade.receivedCutout} className="w-full h-full" />
               <div className="absolute inset-0 bg-gradient-to-l from-warm-900/30 via-transparent to-warm-900/50" />
               <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-warm-900/70 to-transparent pointer-events-none" />
-              <div className="absolute top-2 left-3 sm:top-3 sm:left-4 z-10">
-                <span className="inline-block px-1.5 py-0.5 bg-accent/85 backdrop-blur-sm text-white text-[8px] sm:text-[10px] font-mono tracking-wider rounded-sm">받은 것</span>
+              {/* label: top-left corner, accent color */}
+              <div className="absolute top-2 left-2 sm:top-3 sm:left-3 z-10 pointer-events-none">
+                <span className="inline-block px-2 py-0.5 bg-accent backdrop-blur-sm text-white text-[8px] sm:text-[9px] font-mono tracking-[0.15em] uppercase">got</span>
               </div>
+              {/* item name: bottom */}
               <div className="absolute bottom-3 left-3 sm:bottom-4 sm:left-4 z-10 pointer-events-none">
-                <p className="text-white/90 text-xs sm:text-sm font-medium drop-shadow-lg leading-tight line-clamp-2 break-keep">{trade.receivedItem}</p>
+                <p className="text-white text-sm sm:text-base font-bold drop-shadow-lg leading-tight line-clamp-2 break-keep"
+                  style={{ textShadow: "0 1px 8px rgba(0,0,0,0.7)" }}>{trade.receivedItem}</p>
               </div>
             </div>
           </div>
 
           {/* Info section — always visible */}
-          <div className="relative px-4 sm:px-5 py-3">
-            <div className="flex items-start justify-between gap-3">
+          <div className="relative px-4 sm:px-5 py-3 overflow-hidden">
+            {/* watermark number */}
+            <span className="absolute right-2 top-1/2 -translate-y-1/2 text-7xl sm:text-8xl font-black font-mono text-warm-200/60 select-none leading-none pointer-events-none" aria-hidden="true">
+              {String(trade.round).padStart(2, "0")}
+            </span>
+            <div className="flex items-start justify-between gap-3 relative z-10">
               <div className="flex-1 min-w-0">
                 {trade.note && (
                   <p className="text-xs sm:text-sm text-warm-600 leading-relaxed italic border-l-2 border-accent/40 pl-2 sm:pl-3 line-clamp-3 break-keep">
