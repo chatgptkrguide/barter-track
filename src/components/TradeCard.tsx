@@ -172,47 +172,41 @@ export default function TradeCard({ trade, index }: TradeCardProps): React.JSX.E
             </div>
           </div>
 
-          {/* Photo area - stacked/overlapping */}
-          <div className="relative w-full aspect-[4/5] sm:aspect-[3/4] lg:aspect-[5/4]">
-            {/* Background: given photo */}
-            <div className="absolute inset-0">
+          {/* Photo area - left/right split with exchange sequence */}
+          <div className="trade-split relative w-full flex aspect-[5/3] sm:aspect-[16/9] lg:aspect-[2/1]">
+
+            {/* Left panel: given item */}
+            <div className="trade-given relative w-[47%] overflow-hidden">
               <TradePhoto src={trade.givenImage} alt={trade.givenItem} itemName={trade.givenItem} className="w-full h-full" />
-              <div className="absolute inset-0 bg-warm-900/25" />
-              <div className="absolute inset-0 bg-gradient-to-br from-warm-900/40 via-transparent to-warm-900/50" />
+              <div className="absolute inset-0 bg-gradient-to-r from-warm-900/30 via-transparent to-warm-900/50" />
+              <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-warm-900/70 to-transparent pointer-events-none" />
+              <div className="absolute bottom-3 left-3 sm:bottom-4 sm:left-4 z-10 pointer-events-none">
+                <span className="inline-block px-1.5 py-0.5 bg-warm-900/60 backdrop-blur-sm text-white text-[8px] sm:text-[10px] font-mono tracking-wider rounded-sm">내놓은 것</span>
+                <p className="mt-1 text-white/90 text-xs sm:text-sm font-medium drop-shadow-lg leading-snug line-clamp-2 break-keep max-w-[90%]">{trade.givenItem}</p>
+              </div>
             </div>
 
-            {/* Diagonal decoration */}
-            <div className="absolute inset-0 pointer-events-none z-10 overflow-hidden hidden sm:block">
-              <div className="absolute w-[200%] h-px bg-white/15" style={{ top: "58%", left: "-20%", transform: "rotate(-18deg)" }} />
+            {/* Center: exchange arrow */}
+            <div className="trade-arrow absolute left-1/2 top-1/2 z-30 -translate-x-1/2 -translate-y-1/2 pointer-events-none">
+              <ExchangeArrow />
             </div>
 
-            {/* Given item label */}
-            <div className="absolute top-12 left-3 sm:top-14 sm:left-4 z-20 pointer-events-none">
-              <span className="inline-block px-2 py-0.5 bg-warm-900/50 backdrop-blur-sm text-white text-[8px] sm:text-[10px] font-mono tracking-wider rounded-sm">내놓은 것</span>
-              <p className="mt-1 text-white/85 text-xs sm:text-sm font-medium drop-shadow-lg max-w-[55%] leading-snug line-clamp-2 break-keep">{trade.givenItem}</p>
+            {/* Divider line */}
+            <div className="absolute left-[47%] top-0 bottom-0 w-[6%] z-20 flex items-center justify-center pointer-events-none">
+              <div className="w-px h-full bg-white/20" />
             </div>
 
-            {/* Foreground: received photo (overlapping frame) */}
-            <div
-              className="absolute z-20 right-3 bottom-3 sm:right-5 sm:bottom-5 lg:right-6 lg:bottom-6 w-[55%] sm:w-[48%] lg:w-[44%] aspect-[3/4] rounded-lg overflow-hidden border-2 border-white/80 shadow-xl shadow-warm-900/30"
-              style={{ transform: "translateZ(20px)" }}
-            >
+            {/* Right panel: received item */}
+            <div className="trade-received relative w-[53%] ml-auto overflow-hidden">
               <TradePhoto src={trade.receivedImage} alt={trade.receivedItem} itemName={trade.receivedItem} className="w-full h-full" />
-              <div className="absolute top-2 left-2 z-10">
+              <div className="absolute inset-0 bg-gradient-to-l from-warm-900/30 via-transparent to-warm-900/50" />
+              <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-warm-900/70 to-transparent pointer-events-none" />
+              <div className="absolute top-2 left-3 sm:top-3 sm:left-4 z-10">
                 <span className="inline-block px-1.5 py-0.5 bg-accent/85 backdrop-blur-sm text-white text-[8px] sm:text-[10px] font-mono tracking-wider rounded-sm">받은 것</span>
               </div>
-              <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-warm-900/70 to-transparent pointer-events-none" />
-              <div className="absolute bottom-2 left-2 right-2 z-10">
-                <p className="text-white text-xs sm:text-sm font-medium drop-shadow-lg leading-tight line-clamp-2 break-keep">{trade.receivedItem}</p>
+              <div className="absolute bottom-3 left-3 sm:bottom-4 sm:left-4 z-10 pointer-events-none">
+                <p className="text-white/90 text-xs sm:text-sm font-medium drop-shadow-lg leading-tight line-clamp-2 break-keep">{trade.receivedItem}</p>
               </div>
-            </div>
-
-            {/* Exchange arrow */}
-            <div
-              className="absolute z-20 pointer-events-none right-[52%] bottom-[40%] sm:right-[44%] sm:bottom-[36%] lg:right-[40%] lg:bottom-[34%]"
-              style={{ transform: "translateZ(30px)" }}
-            >
-              <ExchangeArrow />
             </div>
           </div>
 
