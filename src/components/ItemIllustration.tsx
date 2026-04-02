@@ -170,6 +170,302 @@ function MysteryBoxIllustration(): React.JSX.Element {
   );
 }
 
+function WangKkumteulIllustration(): React.JSX.Element {
+  return (
+    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="왕꿈틀이">
+      <defs>
+        <ShadowFilter />
+        <linearGradient id="wkPkgFront" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#ffe066" />
+          <stop offset="100%" stopColor="#f5c518" />
+        </linearGradient>
+        <linearGradient id="wkPkgSide" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stopColor="#d4a010" />
+          <stop offset="100%" stopColor="#e8b815" />
+        </linearGradient>
+        <linearGradient id="wkPkgTop" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#fff3a0" />
+          <stop offset="100%" stopColor="#ffe566" />
+        </linearGradient>
+        <linearGradient id="wormBody1" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stopColor="#ff6b8a" />
+          <stop offset="50%" stopColor="#ff4d73" />
+          <stop offset="100%" stopColor="#e8365d" />
+        </linearGradient>
+        <linearGradient id="wormBody2" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stopColor="#7dd87d" />
+          <stop offset="50%" stopColor="#5cc85c" />
+          <stop offset="100%" stopColor="#45b045" />
+        </linearGradient>
+        <linearGradient id="wormBody3" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stopColor="#ffa94d" />
+          <stop offset="50%" stopColor="#ff8c1a" />
+          <stop offset="100%" stopColor="#e67700" />
+        </linearGradient>
+        <linearGradient id="sugarShimmer" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stopColor="#fff" stopOpacity="0.6" />
+          <stop offset="100%" stopColor="#fff" stopOpacity="0" />
+        </linearGradient>
+      </defs>
+
+      {/* Floor shadow */}
+      <ellipse cx="100" cy="162" rx="58" ry="14" fill={C.shadow} opacity="0.1" />
+
+      {/* Package - isometric box */}
+      <g filter="url(#dropShadow)">
+        {/* Top face */}
+        <polygon points="100,50 158,75 100,100 42,75" fill="url(#wkPkgTop)" stroke="#d4a010" strokeWidth="0.8" />
+        {/* Front face */}
+        <polygon points="42,75 100,100 100,148 42,123" fill="url(#wkPkgFront)" stroke="#d4a010" strokeWidth="0.8" />
+        {/* Side face */}
+        <polygon points="100,100 158,75 158,123 100,148" fill="url(#wkPkgSide)" stroke="#c49510" strokeWidth="0.8" />
+
+        {/* Package top shimmer */}
+        <polygon points="100,52 145,72 100,92 55,72" fill="url(#sugarShimmer)" opacity="0.3" />
+
+        {/* Crown logo area on front */}
+        <polygon points="55,82 92,96 92,118 55,104" fill="#e85d2e" opacity="0.85" />
+        {/* "왕꿈틀이" text on front */}
+        <text x="73" y="100" fontSize="7" fontWeight="900" fontFamily="sans-serif" fill="#fff" textAnchor="middle" transform="skewY(27) translate(-14, -25)">왕꿈틀이</text>
+
+        {/* Decorative stripe on side */}
+        <polygon points="108,96 150,79 150,88 108,105" fill="#e85d2e" opacity="0.7" />
+      </g>
+
+      {/* Gummy worms popping out */}
+      {/* Pink worm - curving out from top */}
+      <g filter="url(#dropShadow)">
+        <path
+          d="M88,62 C82,48 72,42 68,35 C64,28 70,22 78,26 C86,30 82,40 85,48"
+          fill="none" stroke="url(#wormBody1)" strokeWidth="7" strokeLinecap="round"
+        />
+        {/* Sugar coating dots on pink worm */}
+        {[
+          { cx: 72, cy: 36 }, { cx: 76, cy: 30 }, { cx: 80, cy: 42 },
+          { cx: 84, cy: 52 }, { cx: 70, cy: 42 },
+        ].map((d, i) => (
+          <circle key={`sugar1-${i}`} cx={d.cx} cy={d.cy} r="0.8" fill="#fff" opacity="0.7" />
+        ))}
+        {/* Worm eyes */}
+        <circle cx="76" cy="24" r="2" fill="#fff" />
+        <circle cx="76" cy="24" r="1" fill="#222" />
+        <circle cx="80" cy="25" r="2" fill="#fff" />
+        <circle cx="80" cy="25" r="1" fill="#222" />
+      </g>
+
+      {/* Green worm */}
+      <g filter="url(#dropShadow)">
+        <path
+          d="M112,58 C118,44 128,40 135,34 C142,28 148,32 144,40 C140,48 130,46 122,52"
+          fill="none" stroke="url(#wormBody2)" strokeWidth="6.5" strokeLinecap="round"
+        />
+        {[
+          { cx: 130, cy: 38 }, { cx: 136, cy: 34 }, { cx: 140, cy: 42 },
+          { cx: 125, cy: 44 }, { cx: 118, cy: 50 },
+        ].map((d, i) => (
+          <circle key={`sugar2-${i}`} cx={d.cx} cy={d.cy} r="0.7" fill="#fff" opacity="0.6" />
+        ))}
+        <circle cx="143" cy="38" r="1.8" fill="#fff" />
+        <circle cx="143" cy="38" r="0.9" fill="#222" />
+        <circle cx="146" cy="36" r="1.8" fill="#fff" />
+        <circle cx="146" cy="36" r="0.9" fill="#222" />
+      </g>
+
+      {/* Orange worm - smaller, peeking */}
+      <g filter="url(#dropShadow)">
+        <path
+          d="M96,56 C94,46 98,38 104,32 C108,28 112,30 110,36 C108,42 100,44 98,50"
+          fill="none" stroke="url(#wormBody3)" strokeWidth="5.5" strokeLinecap="round"
+        />
+        {[
+          { cx: 102, cy: 34 }, { cx: 106, cy: 32 }, { cx: 100, cy: 42 },
+        ].map((d, i) => (
+          <circle key={`sugar3-${i}`} cx={d.cx} cy={d.cy} r="0.6" fill="#fff" opacity="0.5" />
+        ))}
+        <circle cx="108" cy="31" r="1.5" fill="#fff" />
+        <circle cx="108" cy="31" r="0.7" fill="#222" />
+      </g>
+
+      {/* Scattered sugar particles */}
+      {[
+        { x: 60, y: 55, r: 1.2, o: 0.3 },
+        { x: 145, y: 50, r: 1, o: 0.25 },
+        { x: 90, y: 30, r: 0.8, o: 0.35 },
+        { x: 120, y: 28, r: 1, o: 0.2 },
+        { x: 55, y: 70, r: 0.8, o: 0.15 },
+      ].map((s, i) => (
+        <circle key={`particle-${i}`} cx={s.x} cy={s.y} r={s.r} fill="#fff8dc" opacity={s.o} />
+      ))}
+    </svg>
+  );
+}
+
+function SuneungClockIllustration(): React.JSX.Element {
+  const hourAngle = -60; // 10시 10분 포즈
+  const minuteAngle = 60;
+
+  return (
+    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="수능시계">
+      <defs>
+        <ShadowFilter />
+        <linearGradient id="clockFace" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#fefefe" />
+          <stop offset="100%" stopColor={C.warm100} />
+        </linearGradient>
+        <linearGradient id="clockRim" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor={C.warm200} />
+          <stop offset="50%" stopColor={C.warm300} />
+          <stop offset="100%" stopColor={C.warm400} />
+        </linearGradient>
+        <linearGradient id="clockBack" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor={C.warm300} />
+          <stop offset="100%" stopColor={C.warm400} />
+        </linearGradient>
+        <linearGradient id="strapGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#2d2520" />
+          <stop offset="50%" stopColor="#1e1a16" />
+          <stop offset="100%" stopColor="#2d2520" />
+        </linearGradient>
+        <linearGradient id="strapSide" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stopColor="#1a1512" />
+          <stop offset="100%" stopColor="#2d2520" />
+        </linearGradient>
+        <radialGradient id="glassReflect" cx="35%" cy="35%">
+          <stop offset="0%" stopColor="#fff" stopOpacity="0.4" />
+          <stop offset="50%" stopColor="#fff" stopOpacity="0.1" />
+          <stop offset="100%" stopColor="#fff" stopOpacity="0" />
+        </radialGradient>
+        <linearGradient id="buckleGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor={C.warm300} />
+          <stop offset="100%" stopColor={C.warm400} />
+        </linearGradient>
+      </defs>
+
+      {/* Floor shadow */}
+      <ellipse cx="100" cy="168" rx="65" ry="12" fill={C.shadow} opacity="0.12" />
+
+      <g filter="url(#dropShadow)">
+        {/* === Upper strap (isometric perspective) === */}
+        <path d="M82,28 L78,30 L78,68 L82,66 Z" fill="url(#strapSide)" />
+        <path d="M78,30 L118,30 L122,28 L82,28 Z" fill="#3d352d" />
+        <path d="M118,30 L122,28 L122,66 L118,68 Z" fill="url(#strapGrad)" />
+        <rect x="78" y="30" width="40" height="38" rx="1" fill="url(#strapGrad)" />
+        {/* Strap stitching */}
+        <line x1="80" y1="32" x2="80" y2="66" stroke="#4a3f35" strokeWidth="0.5" strokeDasharray="3,2" />
+        <line x1="116" y1="32" x2="116" y2="66" stroke="#4a3f35" strokeWidth="0.5" strokeDasharray="3,2" />
+        {/* Strap holes */}
+        {[38, 44, 50, 56].map((y) => (
+          <ellipse key={`hole-${y}`} cx="98" cy={y} rx="2" ry="1.2" fill="#1a1512" stroke="#2d2520" strokeWidth="0.3" />
+        ))}
+
+        {/* === Lower strap === */}
+        <path d="M82,138 L78,140 L78,172 L82,170 Z" fill="url(#strapSide)" />
+        <path d="M118,140 L122,138 L122,170 L118,172 Z" fill="url(#strapGrad)" />
+        <rect x="78" y="138" width="40" height="32" rx="1" fill="url(#strapGrad)" />
+        <line x1="80" y1="140" x2="80" y2="170" stroke="#4a3f35" strokeWidth="0.5" strokeDasharray="3,2" />
+        <line x1="116" y1="140" x2="116" y2="170" stroke="#4a3f35" strokeWidth="0.5" strokeDasharray="3,2" />
+
+        {/* Buckle */}
+        <rect x="74" y="164" width="48" height="10" rx="2" fill="url(#buckleGrad)" stroke={C.warm400} strokeWidth="0.5" />
+        <rect x="78" y="166" width="40" height="6" rx="1" fill="none" stroke={C.warm400} strokeWidth="0.6" />
+        <rect x="94" y="165" width="3" height="8" rx="1" fill={C.warm400} />
+
+        {/* === Watch case (3D isometric) === */}
+        {/* Case depth - bottom */}
+        <ellipse cx="100" cy="106" rx="38" ry="38" fill="url(#clockBack)" />
+        {/* Case rim */}
+        <circle cx="100" cy="103" r="38" fill="url(#clockRim)" stroke={C.warm400} strokeWidth="1" />
+        {/* Inner rim */}
+        <circle cx="100" cy="103" r="35" fill="none" stroke={C.warm300} strokeWidth="0.5" />
+
+        {/* Clock face */}
+        <circle cx="100" cy="103" r="33" fill="url(#clockFace)" />
+
+        {/* Hour markers */}
+        {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map((i) => {
+          const angle = (i * 30 - 90) * (Math.PI / 180);
+          const isMain = i % 3 === 0;
+          const outerR = 30;
+          const innerR = isMain ? 25 : 27;
+          return (
+            <line
+              key={`marker-${i}`}
+              x1={100 + Math.cos(angle) * innerR}
+              y1={103 + Math.sin(angle) * innerR}
+              x2={100 + Math.cos(angle) * outerR}
+              y2={103 + Math.sin(angle) * outerR}
+              stroke={isMain ? C.warm800 : C.warm400}
+              strokeWidth={isMain ? 2 : 1}
+              strokeLinecap="round"
+            />
+          );
+        })}
+
+        {/* Hour numbers */}
+        {[12, 3, 6, 9].map((num) => {
+          const i = num === 12 ? 0 : num / 3;
+          const angle = (i * 90 - 90) * (Math.PI / 180);
+          const r = 22;
+          return (
+            <text
+              key={`num-${num}`}
+              x={100 + Math.cos(angle) * r}
+              y={103 + Math.sin(angle) * r + 3}
+              fontSize="8"
+              fontWeight="700"
+              fontFamily="Arial, sans-serif"
+              fill={C.warm800}
+              textAnchor="middle"
+            >
+              {num}
+            </text>
+          );
+        })}
+
+        {/* "수능" text */}
+        <text x="100" y="92" fontSize="5" fontFamily="sans-serif" fill={C.warm400} textAnchor="middle" letterSpacing="1">수능시계</text>
+
+        {/* Hour hand */}
+        <line
+          x1="100" y1="103"
+          x2={100 + Math.cos((hourAngle - 90) * Math.PI / 180) * 16}
+          y2={103 + Math.sin((hourAngle - 90) * Math.PI / 180) * 16}
+          stroke={C.warm800} strokeWidth="2.5" strokeLinecap="round"
+        />
+        {/* Minute hand */}
+        <line
+          x1="100" y1="103"
+          x2={100 + Math.cos((minuteAngle - 90) * Math.PI / 180) * 22}
+          y2={103 + Math.sin((minuteAngle - 90) * Math.PI / 180) * 22}
+          stroke={C.warm800} strokeWidth="1.8" strokeLinecap="round"
+        />
+        {/* Second hand */}
+        <line
+          x1="100" y1="103"
+          x2={100 + Math.cos((180 - 90) * Math.PI / 180) * 24}
+          y2={103 + Math.sin((180 - 90) * Math.PI / 180) * 24}
+          stroke={C.accent} strokeWidth="0.8" strokeLinecap="round"
+        />
+        {/* Center pin */}
+        <circle cx="100" cy="103" r="2.5" fill={C.warm800} />
+        <circle cx="100" cy="103" r="1.2" fill={C.accent} />
+
+        {/* Glass reflection */}
+        <circle cx="100" cy="103" r="33" fill="url(#glassReflect)" />
+
+        {/* Crown (winding knob) */}
+        <rect x="137" y="99" width="6" height="8" rx="2" fill={C.warm300} stroke={C.warm400} strokeWidth="0.5" />
+        <line x1="139" y1="101" x2="139" y2="105" stroke={C.warm400} strokeWidth="0.3" />
+        <line x1="141" y1="101" x2="141" y2="105" stroke={C.warm400} strokeWidth="0.3" />
+      </g>
+
+      {/* Ambient details */}
+      <circle cx="50" cy="60" r="1.2" fill={C.accent} opacity="0.2" />
+      <circle cx="155" cy="150" r="1" fill={C.accentLight} opacity="0.15" />
+    </svg>
+  );
+}
+
 function GenericPackageIllustration({ label }: { label: string }): React.JSX.Element {
   const displayLabel = label.length > 6 ? label.slice(0, 5) + "…" : label;
 
@@ -221,6 +517,16 @@ export default function ItemIllustration({ itemName, className }: ItemIllustrati
   const isPen = name.includes("볼펜") || name.includes("펜") || name.includes("모나미") || name.toLowerCase().includes("monami") || name.toLowerCase().includes("pen");
   if (isPen) {
     return <div className={className}><MonamiPenIllustration /></div>;
+  }
+
+  const isWangKkumteul = name.includes("왕꿈틀이") || name.includes("꿈틀이") || name.includes("젤리") || name.includes("구미");
+  if (isWangKkumteul) {
+    return <div className={className}><WangKkumteulIllustration /></div>;
+  }
+
+  const isClock = name.includes("수능시계") || name.includes("시계") || name.toLowerCase().includes("clock") || name.toLowerCase().includes("watch");
+  if (isClock) {
+    return <div className={className}><SuneungClockIllustration /></div>;
   }
 
   return <div className={className}><GenericPackageIllustration label={name} /></div>;
