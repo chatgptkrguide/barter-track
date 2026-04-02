@@ -33,9 +33,9 @@ function PhotoPlaceholder({
           backgroundSize: "24px 24px",
         }}
       />
-      <div className="absolute w-40 h-40 sm:w-48 sm:h-48 rounded-full border border-warm-200/40" />
+      <div className="absolute w-44 h-44 sm:w-52 sm:h-52 rounded-full border border-warm-200/40" />
       <div className="relative z-10 placeholder-bob">
-        <ItemIllustration itemName={itemName} className="w-28 h-28 sm:w-36 sm:h-36" />
+        <ItemIllustration itemName={itemName} className="w-36 h-36 sm:w-44 sm:h-44" />
       </div>
       <div className="absolute top-3 left-3 w-5 h-5 border-t border-l border-warm-300/30" />
       <div className="absolute top-3 right-3 w-5 h-5 border-t border-r border-warm-300/30" />
@@ -149,7 +149,7 @@ export default function TradeCard({ trade, index }: TradeCardProps): React.JSX.E
             ${isEven ? "md:ml-16" : "md:mr-16"}
           `}
           style={{
-            transform: `perspective(800px) rotateX(${tilt.rotateX}deg) rotateY(${tilt.rotateY}deg)`,
+            transform: `perspective(1200px) rotateX(${tilt.rotateX}deg) rotateY(${tilt.rotateY}deg)`,
             transition: tilt.rotateX === 0 && tilt.rotateY === 0
               ? "transform 0.5s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.5s ease"
               : "transform 0.1s ease-out, box-shadow 0.1s ease-out",
