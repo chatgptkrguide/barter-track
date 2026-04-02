@@ -12,10 +12,170 @@
   --color-warm-900: #2d2520;
   --color-accent: #c45d3e;
   --color-accent-light: #e8a690;
+
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-float-delayed: float 6s ease-in-out 2s infinite;
+  --animate-float-slow: float 8s ease-in-out 1s infinite;
+  --animate-fade-in-up: fade-in-up 0.8s ease-out both;
+  --animate-fade-in-up-delayed: fade-in-up 0.8s ease-out 0.3s both;
+  --animate-fade-in-up-delayed-2: fade-in-up 0.8s ease-out 0.6s both;
+  --animate-pulse-soft: pulse-soft 3s ease-in-out infinite;
+  --animate-slide-in-right: slide-in-right 1s ease-out 0.4s both;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   font-family: var(--font-sans), system-ui, sans-serif;
   background-color: var(--color-warm-50);
   color: var(--color-warm-900);
+}
+
+/* === Hero grain texture === */
+.grain::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.4;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.5'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px 256px;
+}
+
+/* === Hero animations === */
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  33% { transform: translateY(-12px) rotate(1deg); }
+  66% { transform: translateY(-6px) rotate(-1deg); }
+}
+
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse-soft {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+@keyframes slide-in-right {
+  from { opacity: 0; transform: translateX(-40px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+/* === Card animations === */
+@keyframes card-enter {
+  from { opacity: 0; transform: translateY(32px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.card-animate {
+  animation: card-enter 0.6s ease-out both;
+}
+
+@keyframes draw-connector {
+  from { stroke-dashoffset: 200; }
+  to { stroke-dashoffset: 0; }
+}
+
+.connector-draw {
+  stroke-dasharray: 200;
+  animation: draw-connector 1s ease-out 0.3s both;
+}
+
+/* === Placeholder shimmer === */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.placeholder-shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--color-warm-100) 25%,
+    var(--color-warm-200) 50%,
+    var(--color-warm-100) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 3s ease-in-out infinite;
+}
+
+/* === Grain overlay for cards === */
+.grain-overlay::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0.04;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+}
+
+/* === Floating elements === */
+.floating-drift-a { animation: drift-a linear infinite; }
+.floating-drift-b { animation: drift-b linear infinite; }
+.floating-drift-c { animation: drift-c linear infinite; }
+
+@keyframes drift-a {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  25% { transform: translate(6px, -10px) rotate(4deg); }
+  50% { transform: translate(-4px, -18px) rotate(-2deg); }
+  75% { transform: translate(8px, -6px) rotate(3deg); }
+}
+
+@keyframes drift-b {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  25% { transform: translate(-8px, 6px) rotate(-3deg); }
+  50% { transform: translate(5px, 14px) rotate(2deg); }
+  75% { transform: translate(-6px, 4px) rotate(-4deg); }
+}
+
+@keyframes drift-c {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  33% { transform: translate(10px, -8px) rotate(5deg); }
+  66% { transform: translate(-7px, 10px) rotate(-3deg); }
+}
+
+/* === Parallax marquee === */
+.parallax-marquee {
+  display: inline-flex;
+  animation: marquee-scroll linear infinite;
+  will-change: transform;
+}
+
+@keyframes marquee-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* === Grain overlay (full page) === */
+.grain-animate {
+  animation: grain-shift 0.5s steps(4) infinite;
+  will-change: transform;
+}
+
+@keyframes grain-shift {
+  0% { transform: translate(0, 0); }
+  25% { transform: translate(-2%, 3%); }
+  50% { transform: translate(3%, -1%); }
+  75% { transform: translate(-1%, -3%); }
+  100% { transform: translate(2%, 1%); }
+}
+
+/* === Reduced motion === */
+@media (prefers-reduced-motion: reduce) {
+  .floating-drift-a,
+  .floating-drift-b,
+  .floating-drift-c,
+  .parallax-marquee,
+  .grain-animate,
+  .card-animate,
+  .connector-draw,
+  .placeholder-shimmer {
+    animation: none !important;
+  }
 }
